@@ -1,6 +1,13 @@
+
+#this is an early version with plotting
+#used to work out reasonable priors
+
+
 using Printf
 
 using Turing, Distributions, Random, Plots
+
+include("priors.jl")
 
 # c-process function
 function c_process(t, phi)
@@ -19,23 +26,6 @@ end
 
 # logistic (sigmoid) function
 σ(x, slope) = 1 / (1 + exp(-slope * x))
-
-# Priors (with better mean values)
-σ_ϕ = 4.0
-μ_ϕ = -10.0  # aligns sleepiness at 23:00
-
-μ_τ_w = 8.0
-μ_τ_s = 8.0
-
-s_α = 5.0 #these aren't used at the moment
-s_β = 2.5 #these aren't used at the moment
-
-σ_θ = 1.0
-μ_θ_w = 0.2
-μ_θ_s = 0.0
-
-μ_λ_w = 4.0
-μ_λ_s = 10.0
 
 # Bayesian prior model (unchanged for later use)
 @model sleep_model_prior(t) = begin
@@ -61,8 +51,8 @@ end
 ϕ = μ_ϕ
 τ_w = μ_τ_w
 τ_s = μ_τ_s
-s_inf_s = -1.0
-s_inf_w = 0.4
+s_inf_s = μ_inf_s
+s_inf_w = μ_inf_w
 θ_w = μ_θ_w
 θ_s = μ_θ_s
 λ_w = μ_λ_w
